@@ -47,14 +47,13 @@ export default new Vuex.Store({
       const userRestaurants = compId || state.userProfile.restaurants
       if (userRestaurants) {
         const restaurantList = []
-        userRestaurants.forEach(restaurantId => {
-          fb.restaurantsCollection.doc(restaurantId).once((rest) => {
-            const thisRestaurant = {
-              id: rest.id,
-              ...rest.data(),
-            }
-            restaurantList.push(thisRestaurant)
-          })
+        userRestaurants.forEach(async (restaurantId) => {
+          const rest = await fb.restaurantsCollection.doc(restaurantId).get()
+          const thisRestaurant = {
+            id: rest.id,
+            ...rest.data(),
+          }
+          restaurantList.push(thisRestaurant)
         })
         commit("setRestaurants", restaurantList)
       }
