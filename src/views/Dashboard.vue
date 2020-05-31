@@ -3,7 +3,9 @@
     <h1>dashboard</h1>
     <p class>Olá {{ userProfile.name }}</p>
     <h2>restaurantes:</h2>
-    <p v-for="restaurant in restaurants" :key="restaurant.id">{{restaurant.name}}</p>
+    <p v-for="restaurant in restaurants" :key="restaurant.id">
+      <router-link :to="{ name: 'Restaurant', params: { id:restaurant.id }}">{{restaurant.name}}</router-link>
+    </p>
   </div>
 </template>
 

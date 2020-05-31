@@ -120,7 +120,7 @@ export default {
   line-height: 22px;
 }
 #app {
-  font-family: "Space Mono", monospace;
+  font-family: "Montserrat", monospace;
   letter-spacing: -1px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
