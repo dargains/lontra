@@ -26,7 +26,7 @@ export default new Vuex.Store({
       state.currentUser = null
       state.userProfile = {}
       state.restaurants = []
-      state.menus = []
+      state.menu = []
     },
     toggleLoading(state, token) {
       state.loading = token
@@ -40,8 +40,8 @@ export default new Vuex.Store({
     setRestaurants(state, token) {
       state.restaurants = token
     },
-    setMenus(state, token) {
-      state.menus = token
+    setMenu(state, token) {
+      state.menu = token
     },
   },
   actions: {
@@ -57,7 +57,7 @@ export default new Vuex.Store({
           // console.log(err)
         })
     },
-    async getRestaurants({ state, commit, dispatch }, compId) {
+    async getRestaurants({ state, commit }, compId) {
       const userRestaurants = compId || state.userProfile.restaurants;
       if (userRestaurants) {
         const get = new Promise((resolve) => {
@@ -74,25 +74,23 @@ export default new Vuex.Store({
         })
         const restaurantList = await get
         commit("setRestaurants", restaurantList);
-        dispatch('getMenus', restaurantList);
       }
     },
-    async getMenus({ commit }, restaurants) {
+    async getMenu({ state }, restaurantId) {
       const get = new Promise((resolve) => {
-        const menus = []
-        restaurants.forEach(async (restaurant) => {
-          const menuId = restaurant.menu;
-          const rest = await fb.menusCollection.doc(menuId).get()
+        const restaurant = state.restaurants.find(rest => rest.id === restaurantId);
+        const menuId = restaurant.menu;
+        fb.menusCollection.doc(menuId).get().then(menu => {
           const thisMenu = {
-            id: rest.id,
-            ...rest.data(),
+            id: menu.id,
+            ...menu.data(),
           }
-          menus.push(thisMenu)
+          resolve(thisMenu)
         })
-        resolve(menus)
       })
-      const menus = await get;
-      commit("setMenus", menus)
+      const menu = await get;
+      console.log(menu)
+      return menu
     },
     sendAdm(store, token) {
       const emailEndpoint = "https://cors-anywhere.herokuapp.com/https://api.sendgrid.com/v3/mail/send"
