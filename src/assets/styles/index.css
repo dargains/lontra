@@ -1,0 +1,38 @@
+
+
+:root {
+
+  --m-01: #ffce65;
+  --m-02: #f82727;
+  --neu-01: #ffffff;
+  --neu-02: #fafafa;
+  --neu-03: #f2f2f2;
+  --neu-04: #c3c3c3;
+  --neu-05: #181818;
+  --color-primary: #3e8a8d;
+  --color-secondary: #002663;
+  --font-body: "Roboto", sans-serif;
+  --font-heading: "Monstserrat", sans-serif;
+
+  --container-max-w-sm: 90%;
+  --container-max-w-md: 90%;
+  --container-max-w-lg: 90%;
+  --container-max-w-xl: 90%;
+  --container-max-w-xxl: 1520px;
+}
+body {
+  @apply text-body;
+}
+.wrapper {
+  max-width: 1200px;
+  width: 100%;
+  padding: 0 32px;
+  margin: 0 auto;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a {
+  color: var(--color-primary);
+}

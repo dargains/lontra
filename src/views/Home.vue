@@ -1,7 +1,9 @@
 <template>
   <section>
-    <Button type="link" text="login" link="/login" color="neu-05" />
-    <Button type="link" text="signup" link="/signup" color="neu-05" />
+    <div class="wrapper">
+      <Button type="link" text="login" link="/login" color="neu-05" />
+      <Button type="link" text="signup" link="/signup" color="neu-05" />
+    </div>
   </section>
 </template>
 
@@ -17,5 +19,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/config.scss";
+@import "../assets/styles/config.scss";
 </style>

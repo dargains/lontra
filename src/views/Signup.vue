@@ -113,7 +113,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/config.scss";
+@import "../assets/styles/config.scss";
 .signup {
   text-align: left;
   article {

@@ -3,7 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import fb from './firebase'
-import './assets/reset.css'
+// import './assets/styles/reset.css'
+import './assets/styles/index.css';
 
 Vue.config.productionTip = false
 
