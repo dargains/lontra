@@ -88,9 +88,7 @@ export default new Vuex.Store({
           resolve(thisMenu)
         })
       })
-      const menu = await get;
-      console.log(menu)
-      return menu
+      return await get
     },
     sendAdm(store, token) {
       const emailEndpoint = "https://cors-anywhere.herokuapp.com/https://api.sendgrid.com/v3/mail/send"
