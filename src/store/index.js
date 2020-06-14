@@ -2,6 +2,7 @@ import Vue from "vue"
 import Vuex from "vuex"
 import axios from "axios"
 import fb from "../firebase"
+import { Promise } from "core-js"
 
 Vue.use(Vuex)
 
@@ -9,13 +10,23 @@ export default new Vuex.Store({
   state: {
     currentUser: null,
     userProfile: {},
-    restaurants: null,
+    restaurants: [],
+    menus: []
+  },
+  getters: {
+    getRestaurant(state) {
+      return id => state.restaurants.find(rest => rest.id === id)
+    },
+    getMenu(state) {
+      return id => state.menus.find(bit => bit.id === id)
+    }
   },
   mutations: {
     clearData(state) {
       state.currentUser = null
       state.userProfile = {}
       state.restaurants = []
+      state.menus = []
     },
     toggleLoading(state, token) {
       state.loading = token
@@ -28,6 +39,9 @@ export default new Vuex.Store({
     },
     setRestaurants(state, token) {
       state.restaurants = token
+    },
+    setMenus(state, token) {
+      state.menus = token
     },
   },
   actions: {
@@ -43,20 +57,42 @@ export default new Vuex.Store({
           // console.log(err)
         })
     },
-    getRestaurants({ state, commit }, compId) {
-      const userRestaurants = compId || state.userProfile.restaurants
+    async getRestaurants({ state, commit, dispatch }, compId) {
+      const userRestaurants = compId || state.userProfile.restaurants;
       if (userRestaurants) {
-        const restaurantList = []
-        userRestaurants.forEach(async (restaurantId) => {
-          const rest = await fb.restaurantsCollection.doc(restaurantId).get()
-          const thisRestaurant = {
+        const get = new Promise((resolve) => {
+          const restaurantList = []
+          userRestaurants.forEach(async (restaurantId) => {
+            const rest = await fb.restaurantsCollection.doc(restaurantId).get()
+            const thisRestaurant = {
+              id: rest.id,
+              ...rest.data(),
+            }
+            restaurantList.push(thisRestaurant)
+          })
+          resolve(restaurantList)
+        })
+        const restaurantList = await get
+        commit("setRestaurants", restaurantList);
+        dispatch('getMenus', restaurantList);
+      }
+    },
+    async getMenus({ commit }, restaurants) {
+      const get = new Promise((resolve) => {
+        const menus = []
+        restaurants.forEach(async (restaurant) => {
+          const menuId = restaurant.menu;
+          const rest = await fb.menusCollection.doc(menuId).get()
+          const thisMenu = {
             id: rest.id,
             ...rest.data(),
           }
-          restaurantList.push(thisRestaurant)
+          menus.push(thisMenu)
         })
-        commit("setRestaurants", restaurantList)
-      }
+        resolve(menus)
+      })
+      const menus = await get;
+      commit("setMenus", menus)
     },
     sendAdm(store, token) {
       const emailEndpoint = "https://cors-anywhere.herokuapp.com/https://api.sendgrid.com/v3/mail/send"

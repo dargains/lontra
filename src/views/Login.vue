@@ -1,33 +1,8 @@
 <template>
   <section class="login">
     <div class="wrapper">
-      <!-- NEW ADM -->
-      <form @submit.prevent v-if="restaurant">
-        <h2 class="fontL">Criar novo registo</h2>
-        <div class="inputContainer">
-          <p class="fontM bold m-01">Nome:</p>
-          <input v-model.trim="newAdmForm.name" type="text" placeholder="nome" />
-          <span class="error" v-if="newAdmForm.nameError">Falta o nome</span>
-        </div>
-
-        <div class="inputContainer">
-          <p class="fontM bold m-01">Email:</p>
-          <input v-model.trim="newAdmForm.email" type="email" placeholder="email" />
-          <span class="error" v-if="newAdmForm.emailError">Falta o email</span>
-        </div>
-
-        <div class="inputContainer">
-          <p class="fontM bold m-01">Password:</p>
-          <input v-model.trim="newAdmForm.password" type="password" placeholder="min 6 caracteres" />
-          <span class="error" v-if="newAdmForm.passwordError">Falta a password</span>
-        </div>
-
-        <p class="error" v-if="newAdmForm.errorMessage">{{ newAdmForm.errorMessage }}</p>
-        <Button :handleClick="checkAdmForm" text="criar" color="m-01" type="button" />
-      </form>
-
       <!-- LOGIN -->
-      <form @submit.prevent v-else-if="screen === 'login'">
+      <form @submit.prevent v-if="screen === 'login'">
         <h2 class="fontL">Login</h2>
         <div class="inputContainer">
           <p class="fontM bold m-01">Email:</p>
