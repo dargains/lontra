@@ -6,7 +6,7 @@
     <p v-for="restaurant in restaurants" :key="restaurant.id">
       <router-link :to="{ name: 'Restaurant', params: { id:restaurant.id }}">{{restaurant.name}}</router-link>
       <img
-        :src="'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + 'https://lucid-lumiere-6b283a.netlify.app/' + '/restaurant/' + restaurant.id"
+        :src="'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + 'https://lucid-lumiere-6b283a.netlify.app' + '/restaurant/' + restaurant.id"
         alt
       />
     </p>
